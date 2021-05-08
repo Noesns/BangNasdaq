@@ -726,7 +726,6 @@ def seleccion_estrategia(symbol, estrategia: str):
         pass
     return pruebas
 
-
 def medida_duracion(symbol, estrategia: str):
     """
     :param estrategia:Estrategia que se quiere visualizar, de deberan usar las siguientes palabras: 'macd', 'rsi',
@@ -781,7 +780,6 @@ def medida_efectividad(symbol, estrategia: str):
     contav = str(round((contadorv / len(rends2)) * 100, 2)) + ' %'
 
     return contac, contav
-
 
 def medida_claridad(symbol, estrategia: str):
     """
@@ -886,12 +884,13 @@ def CFA_sharperatio(symbol, estrategia: str):
     sventa = [round((rends2[i] - (dt.rf / 360 * 5)) / de(rends2), 2) for i in range(len(rends2))]
 
     sharpesc = pd.DataFrame()
-    sharpesc['Fechas'] = fechas1[0]
+    sharpesc['Fechas'] = [precios['Date'][fechas1[0][i]] for i in range(len(fechas1[0]))]
     sharpesc['Sharpe'] = scompra
 
     sharpev = pd.DataFrame()
-    sharpev['Fechas'] = fechas2[0]
+    sharpev['Fechas'] = [precios['Date'][fechas2[0][i]] for i in range(len(fechas2[0]))]
     sharpev['Sharpe'] = sventa
+
     return sharpesc, sharpev
 
 
