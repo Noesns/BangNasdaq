@@ -80,7 +80,7 @@ def get_tweets(stock: str, update: str):
         all_tweets.extend(tweets)
         oldest_id = tweets[-90].id
 
-        for i in range(170):
+        for i in range(160):
             i += 1
             tweets = api.search(q=query,
                                 # 200 is the maximum allowed count
@@ -114,8 +114,7 @@ def get_tweets(stock: str, update: str):
         df['Polarity'] = df['text'].apply(getPolarity)
         df['result'] = df['Polarity'].apply(x_range)
         df['Sentiment'] = df['Polarity'].apply(x_range_sentiment)
-        Dife = str(date.today())
-        df.to_csv('%s_tweets_%s.csv' % (query, Dife), index=False)
+        df.to_csv("$SPY_tweets.csv", index=False)
         return df
     else:
         print("No update")

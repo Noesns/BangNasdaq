@@ -9,9 +9,7 @@ from dash.dependencies import Input, Output
 from Sentiments_download import get_tweets
 import pandas as pd
 
-df = get_tweets(stock="SPY",update="upno")
-#upyes
-#to update Sentimental analysis due limitations of free Twitter free API
+
 activo = 'FB'
 
 
@@ -81,7 +79,11 @@ señales_4 = estrategia_macd.groupby(estrategia_macd.posicion)
 buy_str_4 = señales_4.get_group("Compra")
 sell_str_4 = señales_4.get_group("Venta")
 
-df = pd.read_csv("$SPY_tweets_%s.csv" % (str('2021-05-10')))
+#Sentimental
+df = get_tweets(stock="SPY",update="upyes")
+#upyes
+#to update Sentimental analysis due limitations of free Twitter free API
+df = pd.read_csv("$SPY_tweets.csv")
 
 hist = px.histogram(df['Polarity'], color=df['Sentiment'],nbins= 9,
                     color_discrete_map={"Positive": "green", "Negative": "red", "Neutral": "yellow"},
