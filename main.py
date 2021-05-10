@@ -6,10 +6,12 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import plotly.express as px
 from dash.dependencies import Input, Output
+from Sentiments_download import get_tweets
 import pandas as pd
 
-
-
+df = get_tweets(stock="SPY",update="upno")
+#upyes
+#to update Sentimental analysis due limitations of free Twitter free API
 activo = 'FB'
 
 
@@ -79,10 +81,7 @@ señales_4 = estrategia_macd.groupby(estrategia_macd.posicion)
 buy_str_4 = señales_4.get_group("Compra")
 sell_str_4 = señales_4.get_group("Venta")
 
-#print(ft.CFA_sharperatio(activo, 'promedios'))
-
-#%%
-df = pd.read_csv("/Users/noesalinas/Downloads/$SPY_tweets_%s.csv" % (str('2021-03-24')))
+df = pd.read_csv("$SPY_tweets_%s.csv" % (str('2021-05-10')))
 
 hist = px.histogram(df['Polarity'], color=df['Sentiment'],nbins= 9,
                     color_discrete_map={"Positive": "green", "Negative": "red", "Neutral": "yellow"},
@@ -90,7 +89,6 @@ hist = px.histogram(df['Polarity'], color=df['Sentiment'],nbins= 9,
                     height=300,
                     title='Histogram Sentiment'
                     )
-
 pos = df[df['result'] == 1][['created_at', 'Polarity']]
 pos = pos.sort_values(by='created_at', ascending=True)
 pos['MA Polarity'] = pos.Polarity.rolling(50, min_periods=10).mean()
@@ -278,6 +276,7 @@ app.layout = html.Div([
                             ]),
                         html.Div(className='eight columns div-for-charts bg-grey', children=[
                             html.H6('💣 BangNasdaq 💣 ',style={'textAlign': 'center'}),
+                            html.H5('',style={'textAlign': 'center'}),
                             dcc.Graph(id='lineplot'),
                             dcc.Graph(id='barplot'),
                             dcc.Graph(id='Candlestick'),
